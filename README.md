@@ -125,15 +125,20 @@ export default factories.createCoreController("api::h5p-content.h5p-content");
 
 ### 4. Download H5P Core Files
 
-Download and extract H5P core and editor files to your public folder:
+The plugin requires H5P core and editor files to be present. Run the setup script:
 
 ```bash
-# Create directories
-mkdir -p public/h5p/{libraries,content,temp-files}
+# Using npx (recommended)
+npx strapi-plugin-h5p setup
 
-# Download H5P core (from h5p.org or use the h5p-cli)
-# You can also upload .h5p files through the admin panel
+# Or using npm script
+npm run setup --prefix node_modules/strapi-plugin-h5p
+
+# Or manually run the script
+node node_modules/strapi-plugin-h5p/scripts/setup-h5p.js
 ```
+
+This will download and extract H5P core and editor files to `public/h5p/libraries/`.
 
 ### 5. Rebuild and Start
 
@@ -207,7 +212,20 @@ This warning appears when Strapi cannot connect to h5p.org to check for updates.
 
 1. Check browser console for errors
 2. Verify CSP settings in `config/middlewares.ts`
-3. Ensure H5P core files are in `public/h5p/`
+3. Ensure H5P core files are in `public/h5p/libraries/`
+
+### "File not found" errors for editor scripts
+
+If you see errors like:
+```
+File not found: public/h5p/libraries/editor/scripts/h5peditor-pre-save.js
+File not found: public/h5p/libraries/editor/ckeditor/ckeditor.js
+```
+
+This means the H5P core and editor files are missing. Run the setup script:
+```bash
+npx strapi-plugin-h5p setup
+```
 
 ## License
 

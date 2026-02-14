@@ -5,8 +5,7 @@ import { useRef, useMemo, useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { H5PEditorUI } from "@lumieducation/h5p-react";
 function parseH5PContent(value) {
-  if (!value)
-    return {};
+  if (!value) return {};
   if (typeof value === "string") {
     try {
       return JSON.parse(value);
@@ -22,13 +21,10 @@ function useH5PSaveIntercept(editorRef, hasInteractedRef, isSavingRef) {
     const handleSaveClick = async (event) => {
       const target = event.target;
       const saveButton = target.closest("button[data-strapi-save]") || target.closest("button");
-      if (!saveButton)
-        return;
+      if (!saveButton) return;
       const isSave = saveButton.hasAttribute("data-strapi-save") || saveButton.textContent?.trim() === "Save";
-      if (!isSave)
-        return;
-      if (!hasInteractedRef.current || !editorRef.current || isSavingRef.current)
-        return;
+      if (!isSave) return;
+      if (!hasInteractedRef.current || !editorRef.current || isSavingRef.current) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       isSavingRef.current = true;
@@ -81,8 +77,7 @@ const H5PEditorField = (props) => {
     async (_contentId) => {
       const content = initialContentRef.current || {};
       const response = await fetch("/api/h5p/editor-model/new");
-      if (!response.ok)
-        throw new Error(`Failed to load editor: ${response.status}`);
+      if (!response.ok) throw new Error(`Failed to load editor: ${response.status}`);
       const editorModel = await response.json();
       if (content.library && content.params) {
         editorModel.library = content.library;
@@ -117,8 +112,7 @@ const H5PEditorField = (props) => {
     [name]
   );
   const handleH5PInteraction = useCallback(() => {
-    if (hasInteractedRef.current)
-      return;
+    if (hasInteractedRef.current) return;
     hasInteractedRef.current = true;
     const currentValue = fieldValueRef.current || "{}";
     const valueStr = typeof currentValue === "string" ? currentValue : JSON.stringify(currentValue);
@@ -225,4 +219,4 @@ H5PEditorField.displayName = "H5PEditorField";
 export {
   H5PEditorField as default
 };
-//# sourceMappingURL=h5p-editor-field-CA0gzHQV.mjs.map
+//# sourceMappingURL=h5p-editor-field-AaRVT-QM.mjs.map

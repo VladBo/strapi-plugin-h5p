@@ -1,6 +1,5 @@
 /// <reference types="node" />
 /// <reference types="node" />
-/// <reference types="node" />
 declare const index: {
     register: ({ strapi }: {
         strapi: import("@strapi/types/dist/core").Strapi;

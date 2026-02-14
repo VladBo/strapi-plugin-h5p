@@ -48,8 +48,8 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => {
   return {
     async initialize(): Promise<void> {
       strapi.log.info("Initializing H5P Editor and Player...");
-      const config2 = strapi.config.get("plugin.h5p") || {};
-      const pluginConfig = config2.config || {};
+      const config2 = (strapi.config.get("plugin.h5p") || {}) as Record<string, any>;
+      const pluginConfig = (config2.config || {}) as Record<string, any>;
       const baseUrl = "/api/h5p";
       const h5pConfig = new h5pServer.H5PConfig(void 0, {
         baseUrl,

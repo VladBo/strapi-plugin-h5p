@@ -10,7 +10,7 @@ export declare const buildLibrary: (input?: {
 }) => string | undefined;
 export declare const resolveLibrary: (payload: Record<string, unknown> | undefined) => string | undefined;
 export declare const normalizeLibrary: (value?: string) => string | undefined;
-export declare const createSlug: (title: string) => any;
+export declare const createSlug: (title: string) => string;
 export declare const getFileStreamResponse: (filePath: string) => {
     stream: NodeJS.ReadableStream;
     mimeType: string;

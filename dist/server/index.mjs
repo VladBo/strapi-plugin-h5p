@@ -61,8 +61,7 @@ function safeJsonParse(value) {
   }
 }
 const buildLibrary = (input) => {
-  if (!input?.machineName)
-    return void 0;
+  if (!input?.machineName) return void 0;
   if (typeof input.majorVersion !== "number" || typeof input.minorVersion !== "number") {
     return void 0;
   }
@@ -78,13 +77,11 @@ const getNestedLibrary = (value) => {
   return getString(record.library) || getString(record.mainLibrary) || getNestedLibrary(record.params);
 };
 const resolveLibrary = (payload) => {
-  if (!payload)
-    return void 0;
+  if (!payload) return void 0;
   return getString(payload.library) || getString(payload.mainLibrary) || getLibraryFromObject(payload.library) || getLibraryFromObject(payload.mainLibrary) || getString(payload.ubername) || getString(payload.libraryName) || getNestedLibrary(safeJsonParse(payload.params));
 };
 const normalizeLibrary = (value) => {
-  if (!value)
-    return value;
+  if (!value) return value;
   const match = /^([\w.]+)-(\d+\.\d+)$/.exec(value);
   if (match) {
     return `${match[1]} ${match[2]}`;

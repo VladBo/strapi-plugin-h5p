@@ -16,7 +16,6 @@ declare const service: ({ strapi }: {
     handleAjax({ action, query, user, method, body, files, }: HandleAjaxArgs): Promise<any>;
     getContentParams(contentId: string): Promise<any>;
     saveContent(contentData: {
-        [key: string]: any;
         library?: string | {
             machineName?: string;
             majorVersion?: number;
@@ -29,6 +28,7 @@ declare const service: ({ strapi }: {
         };
         params?: any;
         metadata?: any;
+        [key: string]: any;
     }, user?: H5PUser | null): Promise<{
         id: any;
     }>;

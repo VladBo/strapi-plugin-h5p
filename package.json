@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-h5p",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "H5P plugin for Strapi - Create and manage interactive H5P content directly in Strapi CMS",
   "keywords": [
     "strapi",
@@ -23,7 +23,11 @@
   "scripts": {
     "build": "pack-up build",
     "watch": "pack-up watch",
-    "verify": "pack-up verify"
+    "verify": "pack-up verify",
+    "setup": "node scripts/setup-h5p.js"
+  },
+  "bin": {
+    "strapi-plugin-h5p": "./scripts/setup-h5p.js"
   },
   "strapi": {
     "name": "h5p",
@@ -52,6 +56,7 @@
     "dist",
     "admin/src",
     "server/src",
+    "scripts",
     "LICENSE",
     "README.md"
   ],

@@ -41,7 +41,7 @@ const index = {
         defaultMessage: "Create and edit interactive H5P content with a visual editor"
       },
       components: {
-        Input: async () => import("../_chunks/h5p-editor-field-CA0gzHQV.mjs")
+        Input: async () => import("../_chunks/h5p-editor-field-AaRVT-QM.mjs")
       }
     });
   },

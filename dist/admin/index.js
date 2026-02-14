@@ -42,7 +42,7 @@ const index = {
         defaultMessage: "Create and edit interactive H5P content with a visual editor"
       },
       components: {
-        Input: async () => Promise.resolve().then(() => require("../_chunks/h5p-editor-field-CnRAvMLw.js"))
+        Input: async () => Promise.resolve().then(() => require("../_chunks/h5p-editor-field-CFlAiTou.js"))
       }
     });
   },
