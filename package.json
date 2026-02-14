@@ -24,7 +24,8 @@
     "build": "pack-up build",
     "watch": "pack-up watch",
     "verify": "pack-up verify",
-    "setup": "node scripts/setup-h5p.js"
+    "setup": "node scripts/setup-h5p.js",
+    "prepare": "pack-up build"
   },
   "bin": {
     "strapi-plugin-h5p": "./scripts/setup-h5p.js"
