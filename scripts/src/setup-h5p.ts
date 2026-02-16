@@ -4,19 +4,17 @@
  * Downloads required H5P core and editor files from GitHub
  *
  * Usage: npx strapi-plugin-h5p setup
- *   or:  node node_modules/strapi-plugin-h5p/scripts/setup-h5p.js
  */
 
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-const { execSync } = require('child_process');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as https from 'https';
+import { execSync } from 'child_process';
 
 const GITHUB_CORE_URL = 'https://github.com/h5p/h5p-php-library/archive/refs/heads/master.zip';
 const GITHUB_EDITOR_URL = 'https://github.com/h5p/h5p-editor-php-library/archive/refs/heads/master.zip';
 
-// Find the Strapi project root by looking for package.json with @strapi/strapi
-function findProjectRoot() {
+function findProjectRoot(): string {
   let dir = process.cwd();
   while (dir !== path.dirname(dir)) {
     const pkgPath = path.join(dir, 'package.json');
@@ -26,24 +24,22 @@ function findProjectRoot() {
         if (pkg.dependencies?.['@strapi/strapi'] || pkg.devDependencies?.['@strapi/strapi']) {
           return dir;
         }
-      } catch (e) {
+      } catch {
         // Continue searching
       }
     }
     dir = path.dirname(dir);
   }
-  // Fallback to cwd
   return process.cwd();
 }
 
-function downloadFile(url, dest) {
+function downloadFile(url: string, dest: string): Promise<void> {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(dest);
 
-    const request = (url) => {
-      https.get(url, (response) => {
-        // Handle redirects
-        if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+    const request = (requestUrl: string): void => {
+      https.get(requestUrl, (response) => {
+        if (response.statusCode && response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
           request(response.headers.location);
           return;
         }
@@ -55,7 +51,8 @@ function downloadFile(url, dest) {
 
         response.pipe(file);
         file.on('finish', () => {
-          file.close(resolve);
+          file.close();
+          resolve();
         });
       }).on('error', (err) => {
         fs.unlink(dest, () => {});
@@ -67,17 +64,14 @@ function downloadFile(url, dest) {
   });
 }
 
-function extractZip(zipPath, destDir, stripPrefix) {
-  // Create destination directory
+function extractZip(zipPath: string, destDir: string, stripPrefix: string): void {
   if (!fs.existsSync(destDir)) {
     fs.mkdirSync(destDir, { recursive: true });
   }
 
   try {
-    // Use unzip command (available on macOS and most Linux)
     execSync(`unzip -q -o "${zipPath}" -d "${destDir}"`, { stdio: 'pipe' });
 
-    // Move contents from the extracted directory (strip the prefix)
     const extractedDir = path.join(destDir, stripPrefix);
     if (fs.existsSync(extractedDir)) {
       const items = fs.readdirSync(extractedDir);
@@ -92,11 +86,11 @@ function extractZip(zipPath, destDir, stripPrefix) {
       fs.rmSync(extractedDir, { recursive: true, force: true });
     }
   } catch (err) {
-    throw new Error(`Failed to extract zip: ${err.message}`);
+    throw new Error(`Failed to extract zip: ${err instanceof Error ? err.message : 'Unknown error'}`);
   }
 }
 
-async function setup() {
+async function setup(): Promise<void> {
   console.log('Setting up H5P Core and Editor files...\n');
 
   const projectRoot = findProjectRoot();
@@ -107,13 +101,11 @@ async function setup() {
   const editorDir = path.join(publicH5pDir, 'editor');
   const tempDir = path.join(projectRoot, '.h5p-temp');
 
-  // Create directories
   fs.mkdirSync(coreDir, { recursive: true });
   fs.mkdirSync(editorDir, { recursive: true });
   fs.mkdirSync(tempDir, { recursive: true });
 
   try {
-    // Download and extract H5P Core
     console.log('Downloading H5P Core...');
     const coreZip = path.join(tempDir, 'h5p-core.zip');
     await downloadFile(GITHUB_CORE_URL, coreZip);
@@ -121,7 +113,6 @@ async function setup() {
     console.log('Extracting H5P Core...');
     extractZip(coreZip, coreDir, 'h5p-php-library-master');
 
-    // Download and extract H5P Editor
     console.log('Downloading H5P Editor...');
     const editorZip = path.join(tempDir, 'h5p-editor.zip');
     await downloadFile(GITHUB_EDITOR_URL, editorZip);
@@ -129,17 +120,15 @@ async function setup() {
     console.log('Extracting H5P Editor...');
     extractZip(editorZip, editorDir, 'h5p-editor-php-library-master');
 
-    // Cleanup
     console.log('Cleaning up...');
     fs.rmSync(tempDir, { recursive: true, force: true });
 
-    console.log('\n✓ H5P setup complete!');
+    console.log('\n\x1b[32m✓ H5P setup complete!\x1b[0m');
     console.log(`  Core files: ${coreDir}`);
     console.log(`  Editor files: ${editorDir}`);
 
   } catch (err) {
-    console.error('\n✗ H5P setup failed:', err.message);
-    // Cleanup on failure
+    console.error('\n\x1b[31m✗ H5P setup failed:\x1b[0m', err instanceof Error ? err.message : err);
     if (fs.existsSync(tempDir)) {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
@@ -147,5 +136,4 @@ async function setup() {
   }
 }
 
-// Run setup
 setup();
