@@ -28,7 +28,7 @@
     "build:plugin": "pack-up build",
     "build:scripts": "tsc -p scripts/tsconfig.json",
     "watch": "pack-up watch",
-    "verify": "pack-up verify",
+    "verify": "pack-up check",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
