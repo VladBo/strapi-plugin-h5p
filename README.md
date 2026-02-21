@@ -237,5 +237,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Support
 
-- [GitHub Issues](https://github.com/strapi-community/strapi-plugin-h5p/issues)
+- [GitHub Issues](https://github.com/VladBo/strapi-plugin-h5p/issues)
 - [Strapi Community Forum](https://forum.strapi.io/)

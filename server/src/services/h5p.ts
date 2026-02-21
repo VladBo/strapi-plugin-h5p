@@ -146,7 +146,11 @@ const service = ({ strapi }: { strapi: Core.Strapi }) => {
     },
     async updateContentTypeCache(): Promise<any> {
       try {
-        const cache = await getEditor().contentTypeCache.update();
+        await getEditor().contentTypeCache.forceUpdate();
+        const cache = await getEditor().getContentTypeCache(
+          resolveUser(undefined),
+          "en",
+        );
         return cache;
       } catch (error) {
         strapi.log.error("Failed to update content type cache:", error);

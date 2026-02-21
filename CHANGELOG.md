@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-02-21
+
+### Fixed
+- Fixed H5P content types not appearing on fresh installation by pre-populating content type cache on bootstrap
+- Updated GitHub repository URL in README
+
+### Changed
+- Content type cache now uses `forceUpdate()` method for more reliable cache updates
+
 ## [1.1.0] - 2026-02-16
 
 ### Added
