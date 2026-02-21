@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-02-21
+
+### Added
+- Automatic H5P Content collection type creation - no longer requires manual setup
+- Content type is now automatically registered when the plugin is installed
+
+### Changed
+- Simplified installation process by removing manual content type creation steps from README
+- Updated README documentation to reflect automatic content type creation
+
 ## [1.1.1] - 2026-02-21
 
 ### Fixed

@@ -2,6 +2,7 @@ import controllers from "./controllers";
 import routes from "./routes";
 import services from "./services";
 import middlewares from "./middlewares";
+import contentTypes from "./content-types";
 import bootstrap from "./bootstrap";
 import register from "./register";
 
@@ -18,5 +19,6 @@ const index = {
   routes,
   services,
   middlewares,
+  contentTypes,
 };
 export default index;

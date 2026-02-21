@@ -5,6 +5,7 @@ Create and manage interactive H5P content directly in your Strapi CMS.
 ## Features
 
 - **H5P Editor Integration** - Full H5P editor embedded in Strapi admin panel
+- **Auto Content Type** - H5P Content collection type automatically created by the plugin
 - **Content Type Selector** - Browse and select from 40+ H5P content types
 - **Content Management** - Create, edit, and manage H5P content as Strapi entries
 - **API Endpoints** - Serve H5P content via REST API for frontend consumption
@@ -79,51 +80,7 @@ export default [
 ];
 ```
 
-### 3. Create H5P Content Type
-
-Create `src/api/h5p-content/content-types/h5p-content/schema.json`:
-
-```json
-{
-  "kind": "collectionType",
-  "collectionName": "h5p_contents",
-  "info": {
-    "singularName": "h5p-content",
-    "pluralName": "h5p-contents",
-    "displayName": "H5P Content",
-    "description": "Interactive H5P content"
-  },
-  "options": {
-    "draftAndPublish": true
-  },
-  "attributes": {
-    "title": {
-      "type": "string",
-      "required": true
-    },
-    "h5pContent": {
-      "type": "json",
-      "customField": "plugin::h5p.h5p-editor"
-    }
-  }
-}
-```
-
-Create the routes file `src/api/h5p-content/routes/h5p-content.ts`:
-
-```typescript
-import { factories } from "@strapi/strapi";
-export default factories.createCoreRouter("api::h5p-content.h5p-content");
-```
-
-Create the controller `src/api/h5p-content/controllers/h5p-content.ts`:
-
-```typescript
-import { factories } from "@strapi/strapi";
-export default factories.createCoreController("api::h5p-content.h5p-content");
-```
-
-### 4. Download H5P Core Files
+### 3. Download H5P Core Files
 
 The plugin requires H5P core and editor files to be present. Run the setup script:
 
@@ -140,7 +97,7 @@ node node_modules/strapi-plugin-h5p/scripts/setup-h5p.js
 
 This will download and extract H5P core and editor files to `public/h5p/libraries/`.
 
-### 5. Rebuild and Start
+### 4. Rebuild and Start
 
 ```bash
 npm run build
